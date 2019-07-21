@@ -1,0 +1,19 @@
+{
+    "require" : {
+        "nikic/php-parser": "~4.0.2"
+    },
+    "require-dev": {
+        "nazonohito51/dependency-analyzer": "~0.2.2",
+        "phpunit/phpunit": "~8"
+    },
+    "autoload": {
+        "psr-4": {
+            "MonkeyPatch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    }
+}
