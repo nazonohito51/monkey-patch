@@ -1,4 +1,14 @@
 {
+    "name": "nazonohito51/monkey-patch",
+    "description": "Monkey patch for php.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kawashima",
+            "email": "nazonohito51@gmail.com"
+        }
+    ],
     "require" : {
         "nikic/php-parser": "~4.0.2"
     },
