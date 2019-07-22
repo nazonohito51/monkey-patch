@@ -16,16 +16,20 @@ class Patcher
         $this->processor = new StreamProcessor($configuration ?? new Configuration());
     }
 
-    public function whenLoad(string $path): self
+    public function whenLoad(string $fileOrDir): self
     {
-        $this->processor->getConfiguration()->addWhiteList($path);
+        $this->processor->getConfiguration()->addWhiteList($fileOrDir);
 
         return $this;
     }
 
-    /**
-     * @param AbstractCodeFilter $filter
-     */
+    public function ignore(string $fileOrDir): self
+    {
+        $this->processor->getConfiguration()->addBlackList($fileOrDir);
+
+        return $this;
+    }
+
     public function patchBy(AbstractCodeFilter $filter): void
     {
         $filter->register();
