@@ -10,10 +10,10 @@
         }
     ],
     "require" : {
-        "nikic/php-parser": "~4.0.2"
+        "nikic/php-parser": "^4.0"
     },
     "require-dev": {
-        "nazonohito51/dependency-analyzer": "~0.2.2",
+        "nazonohito51/dependency-analyzer": "^0.2.2",
         "phpunit/phpunit": "~8"
     },
     "autoload": {
