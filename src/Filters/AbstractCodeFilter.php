@@ -5,10 +5,14 @@ namespace MonkeyPatch\Filters;
 
 abstract class AbstractCodeFilter extends \PHP_User_Filter
 {
-    abstract public function getFilterName(): string;
     abstract protected function transformCode(string $code): string;
 
     protected $isRegistered = false;
+
+    public function getFilterName(): string
+    {
+        return 'monkey_patch_abstract_code_filter';
+    }
 
     public function register(): bool
     {

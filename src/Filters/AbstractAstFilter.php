@@ -14,6 +14,11 @@ abstract class AbstractAstFilter extends AbstractCodeFilter
 {
     abstract protected function getVisitor(): NodeVisitorAbstract;
 
+    public function getFilterName(): string
+    {
+        return 'monkey_patch_abstract_ast_filter';
+    }
+
     protected function transformCode(string $code): string
     {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
