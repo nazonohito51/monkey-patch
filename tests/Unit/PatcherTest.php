@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\MonkeyPatch;
 
+use MonkeyPatch\Filters\AbstractCodeFilter;
 use MonkeyPatch\Filters\RemoveSideEffectFilter;
 use MonkeyPatch\Patcher;
 use MonkeyPatch\Processors\Configuration;
@@ -19,34 +20,28 @@ class PatcherTest extends TestCase
     {
         $configuration = new Configuration();
         $configuration->enableFilterReadFileContent();
-        (new Patcher($configuration))->whenLoad($this->getFixturePath('SomeClass3.php'))->patchBy(new RemoveSideEffectFilter());
+        (new Patcher($configuration))->whenLoad($this->getFixturePath('SomeClass3.php'))->patchBy(new class extends AbstractCodeFilter {
+            protected function transformCode(string $code): string
+            {
+                return preg_replace('/https:\/\/your\.production\.env\.com/', 'https://your.test.env.com', $code);
+            }
+        });
 
         $expected = <<<CODE
 <?php
+declare(strict_types=1);
 
-declare (strict_types=1);
 namespace MonkeyPatch\Tests\Fixtures;
 
-use MonkeyPatch\Tests\Fixtures\SomeClass1;
-const SOME_CONSTANT3 = 'some constant3';
 class SomeClass3
 {
-    private \$someProperty1;
-    protected \$someProperty2;
-    public \$someProperty3;
-    private function someMethod1()
+    public function someMethod()
     {
-        return \$this->someProperty1;
-    }
-    protected function someMethod2()
-    {
-        return \$this->someMethod1();
-    }
-    public function someMethod3()
-    {
-        return \$this->someProperty3;
+        \$client = new \GuzzleHttp\Client();
+        return \$client->request('GET', 'https://your.test.env.com/api/end_point');
     }
 }
+
 CODE;
         $this->assertSame($expected, file_get_contents($this->getFixturePath('SomeClass3.php')));
     }
