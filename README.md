@@ -30,7 +30,7 @@ You can fix php code.
 });
 ```
 
-In this case, SomeClass will be loaded as below. (Of course, original php file will be not changed.)
+In this case, SomeClass will be included as below. (Of course, original php file will be not changed.)
 
 ```php
 <?php
